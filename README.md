@@ -1,4 +1,4 @@
-# Assigment 2
+# Project 2
 팀장
 
 2019202002 이해창(HaechangLee)
