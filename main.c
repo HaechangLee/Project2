@@ -32,7 +32,7 @@ int main(void)
 void filestat1(void)
 {
     if(stat("./text1", &stat1) == -1) {
-        perror("Error occurred while reading filestat of text2");
+        perror("Error occurred while reading filestat of text1");
         return;
     }
     // printf("%ld\n",stat1.st_size);
