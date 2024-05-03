@@ -66,6 +66,23 @@ void filetime2(void)
 //두 개의 파일 크기를 비교하는 함수 작성
 void sizecmp(void)
 {
+    
+    // if(stat("./text1", &stat1) == -1) {
+    //     perror("Error occurred while reading filestat of text1");  
+    // }
+
+    // if(stat("./text2", &stat2) == -1) {
+    //     perror("Error occurred while reading filestat of text2");  
+    // }
+    printf("size compare\n");
+    if(stat1.st_size > stat2.st_size)
+        printf("text1 is bigger\n");
+    else if(stat1.st_size < stat2.st_size)
+        printf("text2 is bigger\n");
+    else
+        printf("sizes are equal\n");
+    return;
+
 }
 
 //두 개의 파일 블락 수를 비교하는 함수 작성
