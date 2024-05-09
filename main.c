@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <time.h>
+#include <stdlib.h>
 
 struct stat stat1,stat2;
 struct tm *time1, *time2;
@@ -33,7 +34,7 @@ void filestat1(void)
 {
     if(stat("./text1", &stat1) == -1) {
         perror("Error occurred while reading filestat of text1");
-        return;
+        exit(1);
     }
     // printf("%ld\n",stat1.st_size);
 
@@ -44,7 +45,7 @@ void filestat2(void)
 {
     if(stat("./text2", &stat2) == -1) {
         perror("Error occurred while reading filestat of text2");
-        return;
+        exit(1);
     }
     // printf("%ld\n",stat2.st_size);
 }
@@ -52,14 +53,16 @@ void filestat2(void)
 //파일 1의 시간 정보를 가져오는 함수 작성
 void filetime1(void)
 {
-    time1 = localtime(&stat1.st_mtime);
+    time1 = malloc(sizeof(struct tm));
+    localtime_r(&stat1.st_mtime, time1);
     // printf("modified at %d/%d %d:%d\n", time1->tm_mon, time1-> tm_mday, time1->tm_hour,time1->tm_min);
 }
 
 //파일 2의 시간 정보를 가져오는 함수 작성
 void filetime2(void)
 {
-    time2 = localtime(&stat2.st_mtime);
+    time2 = malloc(sizeof(struct tm));
+    localtime_r(&stat2.st_mtime,time2);
     // printf("modified at %d/%d %d:%d\n", time2->tm_mon, time2-> tm_mday, time2->tm_hour,time2->tm_min);
 }
 
@@ -76,11 +79,11 @@ void sizecmp(void)
     // }
     printf("size compare\n");
     if(stat1.st_size > stat2.st_size)
-        printf("text1 is bigger\n");
+        printf("text1 is bigger\n\n");
     else if(stat1.st_size < stat2.st_size)
-        printf("text2 is bigger\n");
+        printf("text2 is bigger\n\n");
     else
-        printf("sizes are equal\n");
+        printf("sizes are equal\n\n");
     return;
 
 }
@@ -96,16 +99,16 @@ void datecmp(void)
     printf("date compare\n");
 
     if(time1->tm_mon < time2->tm_mon){
-        printf("text1 is early\n");
+        printf("text1 is early\n\n");
     }else if(time1->tm_mon > time2->tm_mon){
-        printf("text2 is early\n");
+        printf("text2 is early\n\n");
     }else{
         if(time1->tm_mday < time2->tm_mday){
-            printf("text1 is early\n");
+            printf("text1 is early\n\n");
         }else if(time1->tm_mday > time2->tm_mday){
-            printf("text2 is early\n");
+            printf("text2 is early\n\n");
         }else{
-            printf("same date\n");
+            printf("same date\n\n");
         }
     }
     return ;
@@ -115,11 +118,21 @@ void datecmp(void)
 void timecmp(void)
 {
     printf("time compare\n");
-    if(time1 < time2)
-        printf("text1 is early\n");
-    else if(time1 > time2)
-        printf("text2 is early\n");
-    else
-        printf("same time\n");
+    if(time1->tm_hour < time2->tm_hour)
+        printf("text1 is early\n\n");
+    else if(time1->tm_hour > time2->tm_hour)
+        printf("text2 is early\n\n");
+    else{
+        if(time1->tm_min < time2->tm_min) {
+            printf("text1 is early\n\n");
+        }else if(time1->tm_min < time2->tm_min) {
+            printf("text1 is early\n\n");
+        }
+        else {
+            printf("same time\n\n");
+        }
+    }  
+    free(time1);
+    free(time2);
     return;
 }
